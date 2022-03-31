@@ -66,4 +66,8 @@ public class ShoppingCart implements Serializable {
         }
     }
 
+    @Override
+    public String toString() {
+        return String.format("ShoppingCart [products=%s, totalCount=%s]", products, totalCount);
+    }
 }
