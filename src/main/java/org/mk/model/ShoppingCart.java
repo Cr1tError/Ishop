@@ -18,4 +18,10 @@ public class ShoppingCart implements Serializable {
         }
     }
 
+    private void validateProductCount(int count) {
+        if(count > Constants.MAX_PRODUCT_COUNT_PER_SHOPPING_CART){
+            throw new ValidationException("Limit for product count reached: count="+count);
+        }
+    }
+
 }
