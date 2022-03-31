@@ -26,6 +26,18 @@ public class ShoppingCart implements Serializable {
         refreshStatistics();
     }
 
+    public void removeProduct(Integer idProduct, int count) {
+        ShoppingCartItem shoppingCartItem = products.get(idProduct);
+        if (shoppingCartItem != null) {
+            if (shoppingCartItem.getCount() > count) {
+                shoppingCartItem.setCount(shoppingCartItem.getCount() - count);
+            } else {
+                products.remove(idProduct);
+            }
+            refreshStatistics();
+        }
+    }
+
     public Collection<ShoppingCartItem> getItems() {
         return products.values();
     }
@@ -35,6 +47,10 @@ public class ShoppingCart implements Serializable {
         for (ShoppingCartItem shoppingCartItem : getItems()) {
             totalCount += shoppingCartItem.getCount();
         }
+    }
+
+    public int getTotalCount() {
+        return totalCount;
     }
 
     private void validateShoppingCartSize(int idProduct){
