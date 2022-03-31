@@ -1,6 +1,7 @@
 package org.mk.filter;
 
 import org.mk.model.ShoppingCart;
+import org.mk.model.ShoppingCartItem;
 
 import javax.servlet.annotation.WebFilter;
 
@@ -22,5 +23,16 @@ public class AutoRestoreShoppingCartFilter {
             }
         }
         return shoppingCart;
+    }
+
+    protected String shoppingCartToString(ShoppingCart shoppingCart){
+        StringBuilder result = new StringBuilder();
+        for(ShoppingCartItem item : shoppingCart.getItems()){
+            result.append(item.getIdProduct()).append("-").append(item.getCount()).append("|");
+        }
+        if (result.length() > 0){
+            result.deleteCharAt(result.length() - 1);
+        }
+        return result.toString();
     }
 }
