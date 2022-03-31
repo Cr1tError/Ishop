@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mk.util.UrlUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +25,11 @@ public abstract class AbstractFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         String url = req.getRequestURI();
-        doFilter(req, resp, filterChain);
+        if(UrlUtils.isMediaUrl(url) || UrlUtils.isStaticUrl(url)) {
+            filterChain.doFilter(req, resp);
+        } else {
+            doFilter(req, resp, filterChain);
+        }
     }
     public abstract void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException;
 
